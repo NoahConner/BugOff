@@ -23,56 +23,9 @@ import AacB from '../assets/svg/active-bars.svg'
 import AppContext from '../Context/AppContext';
 import Cmos from '../assets/svg/c-mos.svg'
 import Sound from 'react-native-sound'
+import SoundPlayer from 'react-native-sound-player'
 
 const Home = ({ navigation }) => {
-    // var Sound = require('react-native-sound');
-    // var whoosh = new Sound('game_of_thrones.mp3', Sound.MAIN_BUNDLE, (error) => {
-    //     if (error) {
-    //         console.log('failed to load the sound', error);
-    //         return;
-    //     }
-    //     console.log('duration in seconds: ' + whoosh.getDuration() + 'number of channels: ' + whoosh.getNumberOfChannels());
-
-    // });
-    // Sound.setCategory('Playback');
-
-
-    let sound1;
-
-    useEffect(() => {
-        Sound.setCategory('Playback', true); // true = mixWithOthers
-        return () => {
-            if (sound1) sound1.release();
-        };
-    }, []);
-
-    //List of the dummy sound track
-    const audioList = [
-        {
-            title: 'Play mp3 sound from Local',
-            isRequire: true,
-            url: require('./game_of_thrones.mp3'),
-        },
-    ];
-
-    const playSound = () => {
-        sound1 = new Sound(audioList[0].url, (error, _sound) => {
-            if (error) {
-                alert('error' + error.message);
-                return;
-            }
-            sound1.play(() => {
-                sound1.release();
-            });
-        });
-    }
-
-    const stopSound = () => {
-        sound1.stop(() => {
-            console.log('Stop');
-        });
-    }
-
 
     const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
     const [onFreqH, setonFreqH] = useState(true)
@@ -87,27 +40,59 @@ const Home = ({ navigation }) => {
     // const [noLoops,setnoLoops] = useState(undefined)
     // setnoLoops(whoosh.setNumberOfLoops(-1))
 
+    const playSong = () => {
+        try {
+            SoundPlayer.playSoundFile('game_of_thrones', 'mp3')
+        } catch (e) {
+            alert('Cannot play the file')
+            console.log('cannot play the song file', e)
+        }
+    }
+
+    const getInfo = async () => { // You need the keyword `async`
+        try {
+            const info = await SoundPlayer.getInfo() // Also, you need to await this because it is async
+            console.log('getInfo', info) // {duration: 12.416, currentTime: 7.691}
+        } catch (e) {
+            console.log('There is no song playing', e)
+        }
+    }
+
+    const _onFinishedPlayingSubscription = SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
+        console.log('finished playing', success)
+        if(success && appcontext.buzzOn){
+            playSong()
+            getInfo()
+        }
+    })
+
+console.log(_onFinishedPlayingSubscription)
     useEffect(() => {
         runAnimation()
-        liner();
-        linerSmall();
         clih()
         MosA()
-        playSound()
     }, []);
 
     const handleAnimation = (con) => {
         setonFreqH(false)
-        
+
         setTimeout(() => {
             appcontext.setbuzzOn(!appcontext.buzzOn)
             setonFreqH(true)
-            stopSound()
-            // if (!con) {
-            //     playSound()
-            // }else{
-            //     stopSound()
-            // }
+
+            // stopSound()
+            if (!con) {
+                playSong()
+                getInfo()
+
+            } else {
+                try {
+                    SoundPlayer.stop()
+                } catch (e) {
+                    alert('Cannot play the file')
+                    console.log('cannot play the song file', e)
+                }
+            }
         }, 2010)
         Animated.timing(rotateAnimation, {
             toValue: 1,
@@ -170,34 +155,6 @@ const Home = ({ navigation }) => {
     });
 
 
-    const liner = () => {
-        animatedValue2.setValue(100);
-        Animated.timing(animatedValue2, {
-            toValue: -10,
-            duration: 3000,
-            useNativeDriver: true,
-        }).start(() => liner());
-    }
-    const linerValue = animatedValue2.interpolate({
-        inputRange: [-10, 0, 3, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 100],
-        outputRange: [-50, -100, -100, -150, -150, -180, -180, -200, -200, -180, -180, -150, -150, -100, -100, -50],
-    });
-
-
-    const linerSmall = () => {
-        animatedValue3.setValue(100);
-        Animated.timing(animatedValue3, {
-            toValue: -10,
-            duration: 5000,
-            useNativeDriver: true,
-        }).start(() => linerSmall());
-    }
-    const linerValue2 = animatedValue3.interpolate({
-        inputRange: [-10, 0, 3, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 100],
-        outputRange: [0, -15, -15, -15, -15, -25, -25, -25, -25, -25, -25, -15, -15, -15, -15, 0],
-    });
-
-
     const clih = () => {
         Clight.setValue(10);
         Animated.timing(Clight, {
@@ -248,9 +205,10 @@ const Home = ({ navigation }) => {
                             {
                                 appcontext.buzzOn ? (
                                     <>
-                                        <Animated.View style={{ transform: [{ translateX: linerValue }] }}>
-                                            <AacB width={'150%'} height={moderateScale(70)} fill={'#fff'} />
-                                        </Animated.View>
+                                        <Animated.Image
+                                            style={{width:'100%',height:moderateScale(50)}}
+                                            source={require('../assets/gif/waves1.gif')}
+                                        />
 
                                     </>
                                 ) : (
@@ -316,14 +274,18 @@ const Home = ({ navigation }) => {
                             {
                                 appcontext.buzzOn ? (
                                     <>
-                                        <Animated.View style={{ transform: [{ translateX: linerValue2 }] }}>
+                                        {/* <Animated.View style={{ transform: [{ translateX: linerValue2 }] }}>
                                             <Animated.Image
                                                 style={{
                                                     height: moderateScale(20), width: moderateScale(250), resizeMode: 'repeat'
                                                 }}
                                                 source={require('../assets/png/activebars.png')}
                                             />
-                                        </Animated.View>
+                                        </Animated.View> */}
+                                        <Animated.Image
+                                            style={{width:'100%',height:moderateScale(20)}}
+                                            source={require('../assets/gif/waves1.gif')}
+                                        />
                                     </>
                                 ) : (
                                     <>

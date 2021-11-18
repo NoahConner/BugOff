@@ -1,5 +1,9 @@
 rootProject.name = 'Bug'
+include ':react-native-sound-player'
+project(':react-native-sound-player').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sound-player/android')
 include ':react-native-svg'
 project(':react-native-svg').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-svg/android')
+include ':RNSound', ':app'
+project(':RNSound').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sound/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
