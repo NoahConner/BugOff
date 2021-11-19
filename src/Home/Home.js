@@ -300,7 +300,7 @@ import {
     Image,
     Animated,
     Easing,
-    Dimensions
+    ImageBackground
 } from 'react-native';
 import Svg, {
     G,
@@ -377,7 +377,6 @@ const Home = ({ navigation }) => {
 
     const handleAnimation = (con) => {
         setonFreqH(false)
-
         setTimeout(() => {
             appcontext.setbuzzOn(!appcontext.buzzOn)
             setonFreqH(true)
@@ -385,13 +384,11 @@ const Home = ({ navigation }) => {
             if (!con) {
                 playSong()
                 getInfo()
-
             } else {
                 try {
                     SoundPlayer.stop()
                 } catch (e) {
                     alert('Cannot play the file')
-                    // console.log('cannot play the song file', e)
                 }
             }
         }, 2010)
@@ -460,13 +457,13 @@ const Home = ({ navigation }) => {
         animatedValue2.setValue(100);
         Animated.timing(animatedValue2, {
             toValue: -10,
-            duration: 3000,
+            duration: 6000,
             useNativeDriver: true,
         }).start(() => liner());
     }
     const linerValue = animatedValue2.interpolate({
-        inputRange: [-10, 0, 3, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 100],
-        outputRange: [-50, -100, -100, -150, -150, -180, -180, -200, -200, -180, -180, -150, -150, -100, -100, -50],
+        inputRange: [-10,50,100],
+        outputRange: [-0,-900, -0],
     });
 
 
@@ -479,8 +476,8 @@ const Home = ({ navigation }) => {
         }).start(() => linerSmall());
     }
     const linerValue2 = animatedValue3.interpolate({
-        inputRange: [-10, 0, 3, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 100],
-        outputRange: [0, -15, -15, -15, -15, -25, -25, -25, -25, -25, -25, -15, -15, -15, -15, 0],
+        inputRange: [-10, 50, 100],
+        outputRange: [0, -25, 0],
     });
 
 
@@ -498,27 +495,29 @@ const Home = ({ navigation }) => {
         outputRange: ['0deg', '60deg', '0deg'],
     });
 
-
     const MosA = () => {
         Mos.setValue(10);
         Animated.timing(Mos, {
             toValue: -10,
-            duration: 400,
+            duration: 100,
             useNativeDriver: true,
-            delay: 500
         }).start(() => MosA());
     }
     const MosD = Mos.interpolate({
         inputRange: [-10, 0, 10],
-        outputRange: [0, 15, 0],
+        outputRange: [0, 7, 0],
+    });
+    const MosDT = Mos.interpolate({
+        inputRange: [-10, 0, 10],
+        outputRange: [0, 10, 0],
     });
 
     const changeKeepAwake = (shouldBeAwake) => {
         if (!shouldBeAwake) {
-          KeepAwake.activate();
-        //   console.log(KeepAwake)
+            KeepAwake.activate();
+            //   console.log(KeepAwake)
         } else {
-          KeepAwake.deactivate();
+            KeepAwake.deactivate();
         }
     }
 
@@ -541,10 +540,44 @@ const Home = ({ navigation }) => {
                             {
                                 appcontext.buzzOn ? (
                                     <>
-                                        <Animated.View style={{ transform: [{ translateX: linerValue }] }}>
-                                            <AacB width={'150%'} height={moderateScale(70)} fill={'#fff'} />
+                                        <Animated.View style={{height:moderateScale(70),transform:[{translateX:linerValue}],flexDirection:'row'}}>
+                                            {/* <AacB width={'150%'} height={moderateScale(70)} fill={'#fff'} /> */}
+                                                {/* <Animated.Image
+                                                    style={{width:'100%',height:moderateScale(70)}}
+                                                    source={require('../assets/gif/waves1.gif')}
+                                                /> */}
+                                                <Animated.Image
+                                                    style={{width:'100%',height:moderateScale(70)}}
+                                                    source={require('../assets/png/activebars.png')}
+                                                />
+                                                <Animated.Image
+                                                    style={{width:'100%',height:moderateScale(70)}}
+                                                    source={require('../assets/png/activebars.png')}
+                                                />
+                                                <Animated.Image
+                                                    style={{width:'100%',height:moderateScale(70)}}
+                                                    source={require('../assets/png/activebars.png')}
+                                                />
+                                                <Animated.Image
+                                                    style={{width:'100%',height:moderateScale(70)}}
+                                                    source={require('../assets/png/activebars.png')}
+                                                />
+                                                {/* <ImageBackground source={require('../assets/png/activebars.png')} 
+                                                  style={{
+                                                    width: "100%",
+                                                    height: moderateScale(70),
+                                                    position: 'absolute',
+                                                    bottom:0,
+                                                    left:-100
+                                                  }}
+                                                  imageStyle={{
+                                                    resizeMode: "repeat",
+                                                    alignSelf: "flex-end"
+                                                  }}
+                                                >
+                                                    <View style={{width:'100%',height:moderateScale(70)}}></View>
+                                                </ImageBackground> */}
                                         </Animated.View>
-
                                     </>
                                 ) : (
                                     <>
@@ -559,7 +592,7 @@ const Home = ({ navigation }) => {
                                 {
                                     appcontext.buzzOn ? (
                                         <>
-                                            <Animated.View style={{ transform: [{ translateY: MosD }] }}>
+                                            <Animated.View style={{ transform: [{ translateY: MosD },{ translateX: MosDT }] }}>
                                                 <Cmos height={moderateScale(130)} width={moderateScale(170)} />
                                             </Animated.View>
                                         </>
@@ -584,10 +617,6 @@ const Home = ({ navigation }) => {
 
                     <View style={[s.activebtn, appcontext.buzzOn ? s.activebtnBZo : null]}>
                         <TouchableOpacity style={[s.btn, appcontext.buzzOn ? s.btnOn : null]} onPress={async () => {
-                            // whoosh.stop(()=>{
-                            //     handleAnimation(appcontext.buzzOn)
-                            //     console.log('asd')
-                            // })
                             handleAnimation(appcontext.buzzOn)
                         }}>
                             <Animated.View style={{ ...animatedStyle }}>
@@ -597,8 +626,8 @@ const Home = ({ navigation }) => {
                         {
                             appcontext.buzzOn ? (
                                 <>
-                                    <Animated.View style={{ ...s.cLogo, transform: [{ rotate: clihO }] }}>
-                                        <Animated.Image source={require('../assets/png/clayer.png')} style={{ height: moderateScale(140), width: moderateScale(144), }} />
+                                    <Animated.View style={{ ...s.cLogo }}>
+                                        <Animated.Image source={require('../assets/png/circle2.gif')} style={{ height: moderateScale(180), width: moderateScale(188), }} />
                                     </Animated.View>
                                 </>
                             ) : (null)

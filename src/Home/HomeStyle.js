@@ -123,4 +123,8 @@ export default StyleSheet.create({
           width:'100%',
           alignItems:'center'
       },
+      imagebg: {
+        flex: 1,
+        justifyContent: "center"
+      },
 });
