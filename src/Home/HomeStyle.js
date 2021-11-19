@@ -100,6 +100,10 @@ export default StyleSheet.create({
         top:moderateScale(40),
         left:moderateScale(25),
     },
+    tLoho:{
+        height:moderateScale(94),
+        width:moderateScale(136),
+    },
     box:{
         height:'100%',
         backgroundColor: '#5AD2F4'
@@ -113,7 +117,7 @@ export default StyleSheet.create({
       cLogo:{
           position:'absolute',
         //   top:moderateScale(-1),
-          left:moderateScale(-2),
+          left:moderateScale(-4),
           zIndex:-1,
         //   backgroundColor:'#000',
           width:'100%',

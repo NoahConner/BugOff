@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.zoontek.rnbootsplash.RNBootSplashPackage;
+import com.corbt.keepawake.KCKeepAwakePackage;
 import com.johnsonsu.rnsoundplayer.RNSoundPlayerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactInstanceManager;
@@ -30,6 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           // packages.add(new MainReactPackage(),
+            // new RNBootSplashPackage(),
+            // new KCKeepAwakePackage(),
             // new RNSoundPlayerPackage());
           // packages.add(new RNSoundPackage())
           return packages;
