@@ -21,12 +21,12 @@ const DrawerContent = ({ navigation }) => {
                 <View style={{paddingHorizontal:moderateScale(20),marginTop:moderateScale(70)}}>
                     <TouchableOpacity onPress={() => navigation.navigate('FAQ')}>
                         <View>
-                            <Text style={{fontFamily:'Poppins-Medium',color:'#fff',fontSize:moderateScale(34)}}>Quick Help</Text>
+                            <Text style={{fontFamily:'Poppins-Medium',color:'#fff',fontSize:moderateScale(28)}}>Quick Help</Text>
                         </View>
                     </TouchableOpacity >
                     <TouchableOpacity style={{marginTop:moderateScale(20)}} >
                         <View>
-                            <Text style={{fontFamily:'Poppins-Medium',color:'#fff',fontSize:moderateScale(34)}}>FeedBack</Text>
+                            <Text style={{fontFamily:'Poppins-Medium',color:'#fff',fontSize:moderateScale(28)}}>FeedBack</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
