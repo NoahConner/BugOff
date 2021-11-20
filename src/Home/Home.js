@@ -471,13 +471,13 @@ const Home = ({ navigation }) => {
         animatedValue3.setValue(100);
         Animated.timing(animatedValue3, {
             toValue: -10,
-            duration: 5000,
+            duration: 4000,
             useNativeDriver: true,
         }).start(() => linerSmall());
     }
     const linerValue2 = animatedValue3.interpolate({
-        inputRange: [-10, 50, 100],
-        outputRange: [0, -25, 0],
+        inputRange: [-10,50,100],
+        outputRange: [-0,-700, -0],
     });
 
 
@@ -541,11 +541,6 @@ const Home = ({ navigation }) => {
                                 appcontext.buzzOn ? (
                                     <>
                                         <Animated.View style={{height:moderateScale(70),transform:[{translateX:linerValue}],flexDirection:'row'}}>
-                                            {/* <AacB width={'150%'} height={moderateScale(70)} fill={'#fff'} /> */}
-                                                {/* <Animated.Image
-                                                    style={{width:'100%',height:moderateScale(70)}}
-                                                    source={require('../assets/gif/waves1.gif')}
-                                                /> */}
                                                 <Animated.Image
                                                     style={{width:'100%',height:moderateScale(70)}}
                                                     source={require('../assets/png/activebars.png')}
@@ -562,21 +557,6 @@ const Home = ({ navigation }) => {
                                                     style={{width:'100%',height:moderateScale(70)}}
                                                     source={require('../assets/png/activebars.png')}
                                                 />
-                                                {/* <ImageBackground source={require('../assets/png/activebars.png')} 
-                                                  style={{
-                                                    width: "100%",
-                                                    height: moderateScale(70),
-                                                    position: 'absolute',
-                                                    bottom:0,
-                                                    left:-100
-                                                  }}
-                                                  imageStyle={{
-                                                    resizeMode: "repeat",
-                                                    alignSelf: "flex-end"
-                                                  }}
-                                                >
-                                                    <View style={{width:'100%',height:moderateScale(70)}}></View>
-                                                </ImageBackground> */}
                                         </Animated.View>
                                     </>
                                 ) : (
@@ -593,7 +573,7 @@ const Home = ({ navigation }) => {
                                     appcontext.buzzOn ? (
                                         <>
                                             <Animated.View style={{ transform: [{ translateY: MosD },{ translateX: MosDT }] }}>
-                                                <Cmos height={moderateScale(130)} width={moderateScale(170)} />
+                                                <Cmos height={moderateScale(120)} width={moderateScale(160)} />
                                             </Animated.View>
                                         </>
                                     ) : (
@@ -638,7 +618,43 @@ const Home = ({ navigation }) => {
                             {
                                 appcontext.buzzOn ? (
                                     <>
-                                        <Animated.View style={{ transform: [{ translateX: linerValue2 }] }}>
+                                        <Animated.View style={{ transform: [{ translateX: linerValue2 }] , flexDirection:'row'}}>
+                                            <Animated.Image
+                                                style={{
+                                                    height: moderateScale(20), width: moderateScale(250), resizeMode: 'repeat'
+                                                }}
+                                                source={require('../assets/png/activebars.png')}
+                                            />
+                                            <Animated.Image
+                                                style={{
+                                                    height: moderateScale(20), width: moderateScale(250), resizeMode: 'repeat'
+                                                }}
+                                                source={require('../assets/png/activebars.png')}
+                                            />
+                                            <Animated.Image
+                                                style={{
+                                                    height: moderateScale(20), width: moderateScale(250), resizeMode: 'repeat'
+                                                }}
+                                                source={require('../assets/png/activebars.png')}
+                                            />
+                                            <Animated.Image
+                                                style={{
+                                                    height: moderateScale(20), width: moderateScale(250), resizeMode: 'repeat'
+                                                }}
+                                                source={require('../assets/png/activebars.png')}
+                                            />
+                                            <Animated.Image
+                                                style={{
+                                                    height: moderateScale(20), width: moderateScale(250), resizeMode: 'repeat'
+                                                }}
+                                                source={require('../assets/png/activebars.png')}
+                                            />
+                                            <Animated.Image
+                                                style={{
+                                                    height: moderateScale(20), width: moderateScale(250), resizeMode: 'repeat'
+                                                }}
+                                                source={require('../assets/png/activebars.png')}
+                                            />
                                             <Animated.Image
                                                 style={{
                                                     height: moderateScale(20), width: moderateScale(250), resizeMode: 'repeat'
